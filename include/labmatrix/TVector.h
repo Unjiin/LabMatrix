@@ -114,6 +114,12 @@ public:
         memory_.size_ = 0;
     }
 
+    void shrink_to_fit() {
+        if (memory_.capacity_ != memory_.size_) {
+            memory_.reallocate(memory_.size_);
+        }
+    }
+
     [[nodiscard]] const T& operator[](const std::size_t index) const noexcept {
         return memory_.data_[index];
     }
@@ -179,4 +185,3 @@ private:
         }
     }
 };
-

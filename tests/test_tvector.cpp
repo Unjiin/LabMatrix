@@ -68,3 +68,33 @@ TEST(TVectorTest, CopiesIndependently) {
     EXPECT_EQ(original[0], 1);
     EXPECT_EQ(copy[0], 99);
 }
+
+TEST(TVectorTest, ShrinksCapacityAndKeepsElements) {
+    TVector<int> vector;
+    for (int value = 0; value < 16; ++value) {
+        vector.push_back(value);
+    }
+    for (int i = 0; i < 6; ++i) {
+        vector.pop_back();
+    }
+
+    ASSERT_EQ(vector.get_capacity(), 30);
+    vector.shrink_to_fit();
+
+    EXPECT_EQ(vector.get_size(), 10);
+    EXPECT_EQ(vector.get_capacity(), 10);
+    for (int value = 0; value < 10; ++value) {
+        EXPECT_EQ(vector[value], value);
+    }
+}
+
+TEST(TVectorTest, ShrinksEmptyVectorToZeroCapacity) {
+    TVector<int> vector;
+
+    vector.shrink_to_fit();
+
+    EXPECT_EQ(vector.get_size(), 0);
+    EXPECT_EQ(vector.get_capacity(), 0);
+    vector.push_back(42);
+    EXPECT_EQ(vector[0], 42);
+}
