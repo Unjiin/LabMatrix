@@ -34,6 +34,7 @@ add_executable(LabMatrixTests
         tests/test_tvector.cpp
         tests/test_tmathvector.cpp
         tests/test_tmatrix.cpp
+        tests/test_ttriangle_matrix.cpp
 )
 target_link_libraries(LabMatrixTests PRIVATE LabMatrix GTest::gtest_main)
 
